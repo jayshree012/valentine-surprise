@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(to top, #1b1b3a, #3a1c71);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.card {
+  background: rgba(255,255,255,0.12);
+  padding: 20px;
+  border-radius: 24px;
+  width: 95%;
+  max-width: 420px;
+  height: 90%;
+  box-shadow: 0 0 40px rgba(255,200,120,0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* special message time */
+.card.special {
+  background: #b30000;
+  color: yellow;
+}
+
+h1 {
+  color: #ffd36a;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+#text {
+  font-style: italic;
+  line-height: 1.5;
+  overflow-y: auto;
+  max-height: 60vh;
+  margin-bottom: 6px;
+  font-size: 1.7em;
+}
+
+.buttons {
+  margin-top: 4px;
+}
+
+button {
+  padding: 10px 22px;
+  border-radius: 20px;
+  border: none;
+  font-style: italic;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.yes { background: #ffd36a; color: #3a1c71; }
+.no  { background: #ff9aa2; color: #3a1c71; }
+
+#final {
+  display: none;
+  font-style: italic;
+  color: #pink;
+  font-size: 1.7em;
+}
+
+.star {
+  position: absolute;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Moii Sweet Khadus...💗</h1>
+  <div id="text"></div>
+  <div class="buttons" id="btns"></div>
+  <div id="final"></div>
+</div>
+
+<script>
+const lines = [
+  "Thodi si nervous hoon but… 🙈",
+  "Aapki Ghewar Rani ji aapse kuch kehna chahti hai khadus… 👉👈"
+];
+
+let i = 0, j = 0;
+let currentStep = 0;
+
+const textDiv = document.getElementById("text");
+const btns = document.getElementById("btns");
+const card = document.getElementById("card");
+
+function typeText(){
+  if(i < lines.length){
+    if(j < lines[i].length){
+      textDiv.innerHTML += lines[i][j++];
+      setTimeout(typeText, 40);
+    } else {
+      textDiv.innerHTML += "<br><br>";
+      j = 0; i++;
+      setTimeout(typeText, 300);
+    }
+  } else {
+    btns.innerHTML = `
+      <button class="yes" onclick="firstYes()">Aage badho 💫</button>
+      <button class="no" onclick="noText(1)">No 🙃</button>
+    `;
+  }
+}
+typeText();
+
+function noText(step){
+  currentStep = step;
+  textDiv.innerHTML =
+    "Aap apni Ghewar Rani ji ko mana kaise kar sakte ho khadus 😭💔<br>Wapas jao warna baat nahi karungi!";
+  btns.innerHTML = `<button class="yes" onclick="goBack()">Go back 🔙</button>`;
+}
+
+function goBack(){
+  btns.innerHTML = "";
+  if(currentStep === 1) firstYes();
+  if(currentStep === 2) second();
+}
+
+function firstYes(){
+  textDiv.innerHTML =
+    "Dekha mujhe pehle se pata tha ki aap apni Ghewar Rani ji ko mana kar hi nahi sakte 😁💖";
+  btns.innerHTML =
+    `<button class="yes" onclick="second()">Aage badho 💫</button>`;
+}
+
+function second(){
+  textDiv.innerHTML =
+    "So… ek important question hai 💫<br><br><b>Will you be my Valentine?</b>";
+  btns.innerHTML = `
+    <button class="yes" onclick="valentineYes()">YES 💜</button>
+    <button class="no" onclick="noText(2)">No 😤</button>
+  `;
+}
+
+function valentineYes(){
+  textDiv.innerHTML =
+    "Mujhe pata tha aap haa hi bologe mere khadus 😁💖";
+  btns.innerHTML =
+    `<button class="yes" onclick="specialMessage()">Special message 💫</button>`;
+}
+
+function specialMessage(){
+  card.classList.add("special");
+
+  textDiv.innerHTML = `
+  पाहा, मला आधीपासूनच माहीत होतं की तुम्ही आपल्या Ghewar Rani ji ला कधीही नकार देऊ शकणार नाही… 💖<br><br>
+
+  मला तुमच्यासोबत Valentine wala pyaar नाही करायचा…<br>
+  Karwa Chauth wala pyaar करायचा आहे 💗 जसे Mata Parvati ji Bhagwan Shiv ji ला करतात 🤭💕<br><br>
+
+  जेव्हा मी तुमच्यासोबत चांद पाहीन… जर ते आपल्या नशिबात लिहिलं असेल तर 🌙✨<br><br>
+
+  तू खडूस आहेस हे मान्य… पण त्या खडूसपणावर जीवापाड प्रेम करणारी Ghewar Rani ji फक्त मीच आहे 😌💖<br><br>
+
+  *खडूस माझा आहे, आणि Ghewar Rani ji त्याची 😁💖*<br><br>
+
+  हेमेशा असेच खुष रहा आणि एक यशस्वी व्यक्ती बना ✨<br>
+  Just know की आपली Ghewar Rani ji हेमेशा आपल्यासाठी आहे 🤍
+  `;
+  btns.innerHTML =
+    `<button class="yes" onclick="finalScene()">Final 💖</button>`;
+}
+
+function finalScene(){
+  card.classList.remove("special");
+  textDiv.innerHTML = "";
+  btns.innerHTML = "";
+  document.getElementById("final").style.display = "block";
+  document.getElementById("final").innerHTML = `
+    I Love You Khadus....💗<br><br>
+    Ye surprise sirf mere Khadus ke liye hai 😁,<br>
+    isme chhupa mera pyaar feel karna 🤭💖<br><br>
+    <b>HAPPY VALENTINE’S DAY</b><br>
+    <b>MY SWEET KHADUS 💖</b>
+  `;
+}
+
+for(let s=0;s<22;s++){
+  let star=document.createElement("div");
+  star.className="star";
+  star.innerHTML="🌟";
+  star.style.left=Math.random()*100+"vw";
+  star.style.animationDuration=(Math.random()*6+6)+"s";
+  document.body.appendChild(star);
+}
+</script>
+
+</body>
+</html>
